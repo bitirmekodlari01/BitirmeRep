@@ -9,7 +9,7 @@ public class FransaHaritasýForwardChecking {
     static int[] SehirlerinRengi;
     static int[] Renkler;
     static int SehirSayýsý;
-    static long startTime = System.nanoTime();; 
+    static long startTime = System.nanoTime();
     
    
 	static int SehireRenkAtama(int k){

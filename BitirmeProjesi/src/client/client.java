@@ -1,19 +1,17 @@
 package client;
-import 
-java.io.*;
+import java.io.*;
 import java.net.*;
 import java.util.*;
 
-import server.server;
 public class client
 {
 private static InetAddress host;
-private static final int PORT = 1241;
+private static final int PORT = 1259;
 public static void main(String[] args) throws Exception
 {
 try
 {
-//host = InetAddress.getByName("ServerName");
+
 host = InetAddress.getLocalHost();
 }
 catch(UnknownHostException uhEx)
@@ -31,7 +29,7 @@ try
 socket = new Socket(host,PORT);
 Scanner networkInput = new Scanner(socket.getInputStream());
 PrintWriter networkOutput = new PrintWriter(socket.getOutputStream(),true);
-String colors = null,cities = null, response;
+String SehirlerinRengi = null,cities = null, response;
 int deger=111;
 
 do
@@ -40,23 +38,18 @@ do
 	
 	if(deger==111){
 		networkOutput.println("renkver");
-		colors= networkInput.nextLine();
+		SehirlerinRengi= networkInput.nextLine();
 	}else if(deger==112){		
 		networkOutput.println("sehirver");
 		cities= networkInput.nextLine();
 	}	
 	deger=deger+1;
-	/*
-System.out.print("Enter message ('QUIT' to exit): ");
-networkOutput.println("ali");
-response = networkInput.nextLine();
-System.out.println("\nSERVER> " + response);*/
 }
 while (!(deger==113));
 
 
 
-String[] items = colors.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\\s", "").split(",");
+String[] items = SehirlerinRengi.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\\s", "").split(",");
 
 int[] renkler = new int[items.length];
 
@@ -64,7 +57,7 @@ for (int i = 0; i < items.length; i++) {
     try {
     	renkler[i] = Integer.parseInt(items[i]);
     } catch (NumberFormatException nfe) {
-        //NOTE: write something here if you need to recover from formatting errors
+
     };
 }
 String[] items2 = cities.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\\s", "").split(",");
@@ -74,19 +67,17 @@ for (int i = 0; i < items2.length; i++) {
     try {
     	sehirler[i] = Integer.parseInt(items2[i]);
     } catch (NumberFormatException nfe) {
-        //NOTE: write something here if you need to recover from formatting errors
+
     };
 }
 
-colors=Arrays.toString(boyama.main(renkler, sehirler));
-System.out.println("\nson colors:"+colors);
+SehirlerinRengi=Arrays.toString(boyama.main(renkler, sehirler));
+System.out.println("\nson colors:"+SehirlerinRengi);
 
-do{
-	networkOutput.println(colors);
+
+	networkOutput.println(SehirlerinRengi);
 	System.out.println("\nmesaj:"+networkInput.nextLine());
-	deger=deger+1;
-}while(!(deger>113));
-
+	networkOutput.println("QUIT");
 }
 catch(IOException ioEx)
 {
@@ -96,12 +87,12 @@ finally
 {
 try
 {
-System.out.println("\nClosing connection...");
+System.out.println("\nBaðlantýyý kapatýyor...");
 socket.close();
 }
 catch(IOException ioEx)
 {
-System.out.println("Unableto disconnect!");
+System.out.println("Baðlantý kapatýlmaya uygun deðil!!");
 System.exit(1);
 }
 }

@@ -5,11 +5,10 @@ import java.io.*;
 import java.math.*;
 
 public class boyama {
-    static int connected[][];
-    static int[] colors;
-    static int[] renk;
-    static int nColors;
-    static int nNodes;
+    static int KomsulukMatrisi[][];
+    static int[] SehirlerinRengi;
+    static int[] Renkler;
+    static int SehirSayýsý;
     
     
    
@@ -17,45 +16,32 @@ public class boyama {
         do{ 
         	
             int j;
-            renk = new int[]{0,1,2,3};
-            for(j=0;j<=nNodes;j++){ 
+            Renkler = new int[]{0,1,2,3};
+            for(j=0;j<=SehirSayýsý;j++){ 
             	
-            	if(connected[k][j] == 1  && k!=j){  
-                		renk[colors[j]]=4;
+            	if(KomsulukMatrisi[k][j] == 1  && k!=j){  
+            		Renkler[SehirlerinRengi[j]]=4;
                 } 
                 }   	
             	dongudenDevam:
             	for(int y=0;y<4;y++){
-    				if(renk[y]==4){
+    				if(Renkler[y]==4){
     					continue dongudenDevam;
     				}else{
-    					colors[k]=renk[y];
+    					SehirlerinRengi[k]=Renkler[y];
     					break;
     				}
     			}
-           	return colors[k];
+           	return SehirlerinRengi[k];
              
         }while(true);
        
     }
-    /*
-    static void mColoring(int k){
-        do{ 
-            colors[k] = getNodeColor(k); 
-           
-            if(k==nNodes){
-            	
-            	System.out.println("Color Assignment: "+Arrays.toString(colors));
-            }
-            else mColoring(k+1);
-        }while(false);
-    }
-  */
+   
     
     public static int[] main(int[] a,int[] b) throws Exception{ 
-            nColors = 2;
             
-            connected = new int[][]{
+            KomsulukMatrisi = new int[][]{
             		/*0*/   {1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
                     /*1*/   {1,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0},
                     /*2*/   {0,1,1,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0},
@@ -79,16 +65,16 @@ public class boyama {
                     /*20*/  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1},
                     
             }; 
-            nNodes = connected.length-1;
-            colors = new int[nNodes+1];
+            SehirSayýsý = KomsulukMatrisi.length-1;
+            SehirlerinRengi = new int[SehirSayýsý+1];
             for(int j=0;j<a.length;j++){
-            	colors[j]=a[j];
+            	SehirlerinRengi[j]=a[j];
             }
-            System.out.println("\nboyama colors:"+Arrays.toString(colors));
+            System.out.println("\nboyama colors:"+Arrays.toString(SehirlerinRengi));
             for(int j=0;j<b.length;j++){
             	int deger=b[j];
-            colors[deger] = getNodeColor(deger);
+            	SehirlerinRengi[deger] = getNodeColor(deger);
             }
-            return colors;
+            return SehirlerinRengi;
     }
 }
