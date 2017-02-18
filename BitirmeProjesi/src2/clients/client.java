@@ -1,4 +1,4 @@
-package client;
+package clients;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -6,7 +6,7 @@ import java.util.*;
 public class client
 {
 private static InetAddress host;
-private static final int PORT = 1260;
+private static final int PORT = 1262;
 public static void main(String[] args) throws Exception
 {
 try
@@ -34,16 +34,20 @@ int deger=111;
 
 do
 {
-	System.out.println("\n1:"+deger);
-	
+	networkOutput.println("sirakac");
+	if(networkInput.nextLine().equals("1")){
+	System.out.println("\n1:"+deger);	
 	if(deger==111){
 		networkOutput.println("renkver");
 		SehirlerinRengi= networkInput.nextLine();
+		System.out.println(SehirlerinRengi);
 	}else if(deger==112){		
 		networkOutput.println("sehirver");
 		cities= networkInput.nextLine();
+		System.out.println(cities);
 	}	
 	deger=deger+1;
+	}
 }
 while (!(deger==113));
 
@@ -76,8 +80,7 @@ System.out.println("\nson colors:"+SehirlerinRengi);
 
 
 	networkOutput.println(SehirlerinRengi);
-	System.out.println("\nmesaj:"+networkInput.nextLine());
-	networkOutput.println("QUIT");
+	networkOutput.println("bitti");
 }
 catch(IOException ioEx)
 {

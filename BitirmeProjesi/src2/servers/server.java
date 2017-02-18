@@ -1,23 +1,26 @@
-package server;
+package servers;
 
 
 import java.io.*;
 import java.net.*;
 import java.util.*;
+
+
 public class server
 {
 	 static int[] SehirlerinRengi;
 private static ServerSocket serverSocket;//serversocket deðiþkeni olusturuluyor
-private static final int PORT = 1260;//port numarasý belýrlenýyor
+private static final int PORT = 1262;//port numarasý belýrlenýyor
 public static int[] ClientinSehirleri;//clýentýn boyacagý sehýrler deðiþkeni oluþturuluyor
+public static int[] sehirler1,sehirler2;
+public static int sira=1;
+
 public static void main(String[] args) throws Exception
 {
 	
-	int[] sehirler0={0,1,2,3,5,6,7,8,9,10};//serverýn boyayacagý sehýrler belirleniyor
-	ClientinSehirleri=new int[] {11,12,13,14,15,16,17,18,19,20};//clýentýn boyacagý sehýrler belýrlenýyor
-	 SehirlerinRengi = boyama.main(sehirler0);//server kendi þehirlerini boyuyor
-	 
-	System.out.println("Color Assignment: "+Arrays.toString(SehirlerinRengi));//ekrana bastýrýlýyor
+	sehirler1=new int [] {0,1,2,3,5,6,7,8,9,10};//serverýn boyayacagý sehýrler belirleniyor
+	sehirler2=new int [] {11,12,13,14,15,16,17,18,19,20};//clýentýn boyacagý sehýrler belýrlenýyor
+	SehirlerinRengi=new int [] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 try{
 serverSocket = new ServerSocket(PORT);
 }
@@ -55,15 +58,24 @@ ioEx.printStackTrace();
 }
 public void run()
 {
-String received;
+String received; 
+
 do
 {
 received = input.nextLine();
-
-if(received.equals("renkver")){
+System.out.println(received);
+if(received.equals("sirakac")){
+	output.println(Integer.toString(server.sira));
+	
+}else if(received.equals("renkver")){
 	output.println(Arrays.toString(server.SehirlerinRengi));
+	
 }else if(received.equals("sehirver")){
-	output.println(Arrays.toString(server.ClientinSehirleri));
+	if(server.sira==1){
+		output.println(Arrays.toString(server.sehirler1));
+		}else if(server.sira==2){
+			output.println(Arrays.toString(server.sehirler2));
+		}
 }else if(received.substring(0,1).equals("[")){
 	String[] items2 = received.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\\s", "").split(",");
 
@@ -72,15 +84,18 @@ if(received.equals("renkver")){
 	    	server.SehirlerinRengi[i] = Integer.parseInt(items2[i]);
 	    } catch (NumberFormatException nfe) {
 	       
-	    };
+	    }
 	}
 
 	output.println("islem tamamlandi");
-	System.out.println("\n Þehirlerin rengi:"+Arrays.toString(server.SehirlerinRengi));//Boyanan þehirlerin renkleri
+}else if(received.equals("bitti")){
+	server.sira=server.sira+1;
+	System.out.println(server.sira);
 }
+
 }
 while (!received.equals("QUIT")); //"QUIT" gelinceye kadar çalýþýr
-
+System.out.println("\n server rengi:"+Arrays.toString(server.SehirlerinRengi));
 try
 {
 
