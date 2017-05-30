@@ -1,4 +1,4 @@
-package clients;
+package clients3;
 
 import java.util.*;
 import java.io.*; 
@@ -20,12 +20,12 @@ public class boyama {
             for(j=0;j<=SehirSayýsý;j++){ 
             	
             	if(KomsulukMatrisi[k][j] == 1  && k!=j){  
-            		Renkler[SehirlerinRengi[j]]=4;
+            		Renkler[SehirlerinRengi[j]]=99;
                 } 
                 }   	
             	dongudenDevam:
             	for(int y=0;y<4;y++){
-    				if(Renkler[y]==4){
+    				if(Renkler[y]==99){
     					continue dongudenDevam;
     				}else{
     					SehirlerinRengi[k]=Renkler[y];

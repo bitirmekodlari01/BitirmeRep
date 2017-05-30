@@ -9,7 +9,7 @@ public class AmerikaEyaletleriBacktracking {
     static int[] SehirlerinRengi;
     static int RenkSayýsý;
     static int SehirSayýsý;
-    static long startTime = System.nanoTime();; 
+    static long startTime = System.nanoTime();
     static int SehireRenkAtama(int k){
         do{ 
             int j;

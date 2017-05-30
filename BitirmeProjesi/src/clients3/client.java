@@ -1,4 +1,4 @@
-package clients;
+package clients3;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -42,7 +42,7 @@ do
 		SehirlerinRengi= networkInput.nextLine();
 		System.out.println(SehirlerinRengi);
 	}else if(deger==112){		
-		networkOutput.println("sehirver");
+		networkOutput.println("ajansehir2");
 		cities= networkInput.nextLine();
 		System.out.println(cities);
 	}	

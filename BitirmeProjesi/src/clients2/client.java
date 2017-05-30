@@ -41,7 +41,7 @@ do
 		networkOutput.println("renkver");
 		SehirlerinRengi= networkInput.nextLine();
 	}else if(deger==112){		
-		networkOutput.println("sehirver");
+		networkOutput.println("ajansehir1");
 		cities= networkInput.nextLine();
 	}	
 	deger=deger+1;
@@ -78,7 +78,7 @@ System.out.println("\nson colors:"+SehirlerinRengi);
 
 
 	networkOutput.println(SehirlerinRengi);
-	networkOutput.println("QUIT");
+	networkOutput.println("bitti");
 }
 catch(IOException ioEx)
 {

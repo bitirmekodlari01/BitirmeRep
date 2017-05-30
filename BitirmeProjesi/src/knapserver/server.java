@@ -1,4 +1,4 @@
-package servers;
+package knapserver;
 
 
 import java.io.*;
@@ -8,19 +8,23 @@ import java.util.*;
 
 public class server
 {
-	 static int[] SehirlerinRengi;
+
 private static ServerSocket serverSocket;//serversocket deðiþkeni olusturuluyor
-private static final int PORT = 1262;//port numarasý belýrlenýyor
+private static final int PORT = 1268;//port numarasý belýrlenýyor
 public static int[] ClientinSehirleri;//clýentýn boyacagý sehýrler deðiþkeni oluþturuluyor
-public static int[] sehirler1,sehirler2;
+public static int[] urunAgirlik,urunDeger;
+public static int urunSayisi,maxAgirlik;
 public static int sira=1;
 
 public static void main(String[] args) throws Exception
 {
+	urunSayisi=14;
+	maxAgirlik=60;
+	urunAgirlik=new int [] {0,50,10,20,30,40,5,15,15,60,30,25,25,5,5};
+	urunDeger=new int [] {0,100,150,200,250,300,350,400,450,500,550,600,650,700,750};
 	
-	sehirler1=new int [] {0,1,2,3,5,6,7,8,9,10};//serverýn boyayacagý sehýrler belirleniyor
-	sehirler2=new int [] {11,12,13,14,15,16,17,18,19,20};//clýentýn boyacagý sehýrler belýrlenýyor
-	SehirlerinRengi=new int [] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	urunAgirlik=knapsack.main(urunAgirlik, urunDeger, maxAgirlik, urunSayisi);
+	System.out.println(Arrays.toString(urunAgirlik));
 try{
 serverSocket = new ServerSocket(PORT);
 }
@@ -41,6 +45,7 @@ while (true);
 }
 class ClientHandler extends Thread
 {
+	static long startTime = System.nanoTime();
 private Socket client;
 private Scanner input;
 private PrintWriter output;
@@ -63,39 +68,40 @@ String received;
 do
 {
 received = input.nextLine();
+
 System.out.println(received);
 if(received.equals("sirakac")){
-	output.println(Integer.toString(server.sira));
-	
-}else if(received.equals("renkver")){
-	output.println(Arrays.toString(server.SehirlerinRengi));
-	
-}else if(received.equals("sehirver")){
-	if(server.sira==1){
-		output.println(Arrays.toString(server.sehirler1));
-		}else if(server.sira==2){
-			output.println(Arrays.toString(server.sehirler2));
-		}
+	output.println(Integer.toString(server.sira));	
+}else if(received.equals("urunsayisi")){
+	output.println(Integer.toString(server.urunSayisi));	
+}else if(received.equals("urunagirlik")){	
+		output.println(Arrays.toString(server.urunAgirlik));
+}else if(received.equals("urundeger")){	
+			output.println(Arrays.toString(server.urunDeger));
+}else if(received.equals("maxagirlik")){	
+	output.println(Integer.toString(server.maxAgirlik));
 }else if(received.substring(0,1).equals("[")){
 	String[] items2 = received.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\\s", "").split(",");
 
 	for (int i = 0; i < items2.length; i++) {
 	    try {
-	    	server.SehirlerinRengi[i] = Integer.parseInt(items2[i]);
+	    	if(Integer.parseInt(items2[i])!=9){
+	    	server.urunAgirlik[i] = Integer.parseInt(items2[i]);
+	    	}
 	    } catch (NumberFormatException nfe) {
 	       
 	    }
 	}
-
 	output.println("islem tamamlandi");
 }else if(received.equals("bitti")){
-	server.sira=server.sira+1;
-	System.out.println(server.sira);
+		server.sira=server.sira+1;
 }
-
-}
-while (!received.equals("QUIT")); //"QUIT" gelinceye kadar çalýþýr
-System.out.println("\n server rengi:"+Arrays.toString(server.SehirlerinRengi));
+}while (!received.equals("QUIT")); //"QUIT" gelinceye kadar çalýþýr
+System.out.println("\n server rengi:"+Arrays.toString(server.urunAgirlik));
+long endTime = System.nanoTime();
+long estimatedTime = endTime - startTime; // Geçen süreyi milisaniye cinsinden elde ediyoruz
+ double seconds = (double)estimatedTime/1000000000;
+ System.out.println("Geçen Süre:"+seconds+" saniye");
 try
 {
 
@@ -108,6 +114,6 @@ client.close();
 catch(IOException ioEx)
 {
 System.out.println("Baðlantý kapatýlmaya uygun deðil!");
-}	
+}
 }
 }
